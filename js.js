@@ -26,18 +26,26 @@ function createCookie(name, value, minutes) {
 function greet() {
     cookie = false;
 }
-function setStorageExpire() {
+function setStorage() {
     sessionStorage.setItem('key', randomNum);
     let data = sessionStorage.getItem('key');
     console.log(data);
 }
+function setStorageExpire(){
+    sessionStorage.removeItem('key');
+}
 
 function checkCookie() {
+    randomNum = Math.floor(Math.random() * 100000) + 1;
 
+    if (sessionStorage.getItem('key') === null) {
+        setStorage();
+        var timeOutSession = setTimeout(setStorageExpire, 30000);
+
+    }
     if (!cookieExists) {
-        randomNum = Math.floor(Math.random() * 100000) + 1;
+        // randomNum = Math.floor(Math.random() * 100000) + 1;
         console.log('ne postoji');
-        setStorageExpire();
         createCookie("expireCookie", randomNum, 0.5);
     }
 }
@@ -49,20 +57,21 @@ function setCookieMidnight() {
 }
 var timeOutMid = setTimeout(setCookieMidnight, msToMidnight);
 
+
 // Click event trigger new cookie
 document.addEventListener('click', function (e) {
 
     if (sessionStorage.getItem('key') === null) {
         console.log('problem')
         randomNum = Math.floor(Math.random() * 100000) + 1;
-        setStorageExpire();
+        setStorage();
         createCookie("expireCookie", randomNum, 0.5);
     }
  
     if (cookie === false) {
         cookie = true;
         randomNum = Math.floor(Math.random() * 100000) + 1;
-        setStorageExpire();
+        setStorage();
         createCookie("expireCookie", randomNum, 0.5);
 
     } else {
